@@ -1,0 +1,8 @@
+public enum TipoObjeto {
+    POCION,
+    SUPERPOCION,
+    POCION_MAXIMA,
+    REVIVIR_MAXIMO,
+    CARAMELO_PEQUEÑO,
+    CARAMELO_GRANDE
+}
