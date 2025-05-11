@@ -57,10 +57,10 @@ public class Entrenador implements Batalla{
         for (int i = 0; i < k; i++) {
             // selecionamos de forma alzar el tipo de Javaling del entrenador (no tenia idea que se podia hacer asi)
             Javaling javalinito = switch (getTipoRandomEntrenador()) {
-                case Tipo.FUEGO -> new Fuego();
-                case Tipo.AGUA -> new Agua();
-                case Tipo.PLANTA -> new Planta();
-                case Tipo.DRAGON -> new Dragon();
+                case Tipo.FUEGO -> new Fuego(true);
+                case Tipo.AGUA -> new Agua(true);
+                case Tipo.PLANTA -> new Planta(true);
+                case Tipo.DRAGON -> new Dragon(true);
             };
             // actualizamos el status del javaling
             javalinito.setNivel(getRandNivel(piso));
@@ -79,9 +79,7 @@ public class Entrenador implements Batalla{
         }
     }
 
-    // gettter
-    public Javaling[] getEquipo() { return equipo;}
-
+    
     public Javaling elgirJavalingActivo() {
         // parte desde indice 0 buscando un Javaling
         for (int i = 0; i < equipo.length; i++) {
@@ -90,6 +88,8 @@ public class Entrenador implements Batalla{
         // si no encuentra ninguno, significa que murieron, entonces devolver null
         return null;
     }
-        
+    
+    // gettter
+    public Javaling[] getEquipo() { return equipo;}
 
 }

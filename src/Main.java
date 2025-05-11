@@ -105,14 +105,21 @@ public class Main {
                 Utilidades.slowPrint("3. Elegir un objeto aleatorio.\n");
                 Utilidades.slowPrint("4. Ver bolsa.\n");
                 Utilidades.slowPrint("5. Ver mis Javalings.\n");
-                // sansanito, sala que curacion
                 if (jugador.getPisoActual().getNumPiso() % 10 == 0) {
                     jugador.getPisoActual().setCentroSansanito(true);
                     Utilidades.slowPrint("6. Sansanito (sala de curacion).\n");
                 } else {
                     jugador.getPisoActual().setCentroSansanito(false);
                 }
-                int opcion = scanner.nextInt();
+
+                int opcion = -1;    // para inputs invalidos
+                try {
+                    opcion = scanner.nextInt();
+                } catch (java.util.InputMismatchException e) {
+                    Utilidades.slowPrint("Opcion invalida, por favor escoge una opcion valida.\n", "rojo");
+                    scanner.nextLine(); // se limpa el scanner
+                    continue; // devuelta al bucle
+                }
 
                 // se asigna la decision del jugador y se realiza
                 jugador.getPisoActual().setDecision(opcion);

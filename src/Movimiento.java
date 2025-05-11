@@ -36,9 +36,22 @@ public class Movimiento {
     }
     // retorna un movimiento random cualquiera pero con chance
     public static Movimiento movimientoRandomChance() {
-        // TODO
+        // Lista de nombres de movimientos aleatorios
+        String[] nombres = {"Latigazo", "Hoja afilada", "Esporas", "Lanzallamas", "Ascuas", "Picante", "Tsunami", "Burbujas", "Congelar", "Cola dragón", "Fuego dragón", "Rugido"};
+        
+        // Seleccionar un nombre aleatorio
+        String nombre = nombres[random.nextInt(nombres.length)];
+        
+        // Obtener un tipo aleatorio
         Tipo tipo = Javaling.tipoRandom();
-        Movimiento movimiento = new Movimiento("Caquita //CAMBIAR DESPUES", tipo, random.nextBoolean()); 
+        
+        // Determinar si es un movimiento de estado
+        boolean esEstado = random.nextBoolean();
+        
+        // Crear el movimiento
+        Movimiento movimiento = new Movimiento(nombre, tipo, esEstado);
+        
+        // Retornar el movimiento con un 50% de probabilidad
         if (random.nextBoolean()) {
             return movimiento;
         } else {

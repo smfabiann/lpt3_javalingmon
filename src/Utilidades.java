@@ -118,4 +118,9 @@ public class Utilidades {
     public static boolean randomNextBool() {
         return random.nextBoolean();
     }
+
+    public static void resetPrintColor() {
+        System.out.print("\u001B[0m"); // Código ANSI para resetear colores
+    }
+
 }

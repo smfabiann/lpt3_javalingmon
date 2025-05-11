@@ -127,13 +127,12 @@ public class Piso {
             Utilidades.slowPrint("2. Cambiar Javaling\n");
             Utilidades.slowPrint("3. Escapar!!\n");
 
-
             /*
-             * TODO: colocar javaling elegido por el jugador
+             * TODO: ASCII colocar javaling elegido por el jugador
              */
 
             /*
-             * TODO: colocar javaling enemigo
+             * TODO: ASCII colocar javaling enemigo
              */
 
             Batalla entrenadorB = entr;
@@ -142,6 +141,17 @@ public class Piso {
             
             // vemos la opcion del jugador
             int opcion = scanner.nextInt();
+
+            // habilidad de javaling tipo planta
+            if (javalingJugador.getTipo() == Tipo.PLANTA) {
+                // si el javaling es de tipo planta, se le da la habilidad de curarse
+                if (javalingJugador.getHpActual() < javalingJugador.getHpTotal()) {
+                    Utilidades.slowPrint("El javaling se cura un poco por su habilidad!!\n", "verde");
+                    Planta planta = (Planta) javalingJugador;
+                    Utilidades.slowPrint("Tu Javaling se cura " + planta.activarFotosintesis() + "de HP!!!\n", "verde");
+                }
+            }
+
             // loop principal de la batalla
             if (opcion == 1) {
                 // le damos las opciones de movimiento al jugador
@@ -218,6 +228,14 @@ public class Piso {
 
                     // actualizamos el javaling del jugador
                     javalingJugador.setHpActual(javalingJugador.getHpActual() - daño);
+
+                    // activamos la habilidad de oleaje
+                    if (javalingEntrenador.getTipo() == Tipo.AGUA) {
+                        Agua agua = (Agua) javalingEntrenador;
+                        agua.activarOleaje();
+                    }
+                    // no es necesario hacer lo mismo para el javaling Fuego
+
                     // en caso de que el javaling muera
                     if (javalingJugador.getHpActual() <= 0) {
                         // le avisamos al jugador que su javalign ha caido
@@ -230,6 +248,8 @@ public class Piso {
 
                         // si es que el jugador se equedo sin javalines validos, es game over
                         if (javalingJugador == null) {
+                            // espacio
+                            for (int i = 0; i < 10; i++) System.out.println();
                             Utilidades.slowPrint("Todo tu equipo ha sido derrotado", "rojo");
                             // puntitos para efecto dramatico
                             for (int i = 0; i < 4; i++) {
@@ -239,7 +259,7 @@ public class Piso {
                             Utilidades.sleep(700);
                             for (int i = 0; i < 50; i++) System.out.println();
                             // game over
-                            Utilidades.slowPrint("GAME OVER", "rojo");
+                            Utilidades.slowPrint("GAME OVER\n", "rojo");
                             System.exit(0);
                         }
 

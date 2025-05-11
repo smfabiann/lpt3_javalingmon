@@ -18,6 +18,9 @@ public class Jugador implements Batalla {
         boolean valido = false;
         // iteramos por el equipo
         for (int i = 0; i < equipo.length; i++) {
+            // se me olvido el chequeo de null
+            if (equipo[i] == null) continue;
+            // si el javaling tiene vida
             if (equipo[i].getHpActual() > 0) {
                 valido = true;  // si encuentra uno con vida, pordemos continuar con el while
             }
@@ -38,7 +41,7 @@ public class Jugador implements Batalla {
             };
 
             // chequeamos que el javaling elegido esta vivo
-            if (equipo[eleccion-1].getHpTotal() <= 0) {
+            if (equipo[eleccion-1].getHpActual() <= 0) {
                 Utilidades.slowPrint("Opcion invalida.\n", "rojo");
                 continue;
             }
@@ -120,16 +123,27 @@ public class Jugador implements Batalla {
     }
     // ve los  Javalings del equipo
     public void verJavalingsEquipo() {
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║              EQUIPO JAVALINGS              ║");
+        System.out.println("╚════════════════════════════════════════════╝");
+
         int iter = 1;
         for (Javaling i : equipo) {
-            // si es que no hay un Javaling en esa posicion
+            // Si no hay un Javaling en esa posición, lo ignoramos
             if (i == null) continue;
-            // agregamos color constumisado para el tipo de Javaling
+
+            // Cambiar el color según el tipo del Javaling
             if (i.getTipo() == Tipo.FUEGO) Utilidades.setPrintColor("naranja");
             if (i.getTipo() == Tipo.AGUA) Utilidades.setPrintColor("cyan");
             if (i.getTipo() == Tipo.PLANTA) Utilidades.setPrintColor("verde");
             if (i.getTipo() == Tipo.DRAGON) Utilidades.setPrintColor("magenta");
-            Utilidades.slowPrint(iter + ") Lv. " +  i.getNivel() + " '" + i.getNombre() + "' HP: " + i.getHpActual() +"/" + i.getHpTotal() + " ["+ i.getTipo() + "]\n");
+
+            // Mostrar información del Javaling con bordes
+            System.out.println("╔════════════════════════════════════════════╗");
+            System.out.printf("║ %d) %-10s [%-6s] Lv. %-2d HP: %-3d/%-3d ║\n",
+                iter, "'" + i.getNombre() + "'", i.getTipo(), i.getNivel(), i.getHpActual(), i.getHpTotal());
+            System.out.println("╚════════════════════════════════════════════╝");
+
             iter++;
         }
     }
