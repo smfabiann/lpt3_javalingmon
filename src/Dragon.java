@@ -28,38 +28,35 @@ public class Dragon extends Javaling {
 
     @Override
     public int atacar(Javaling objetivo, int indiceMov) {
-        // obtenemos el movimiento
         Movimiento mov = getMovimientos()[indiceMov];
-
-        // Calcular STAB
         double STAB = (mov.getTipo() == getTipo()) ? 1.5 : 1.0;
-
-        // eficacia segun el tipo del movimiento y el objetivo
         double eficacia = 1.0;
+
+        // Eficacia según tabla
         if (mov.getTipo() == Tipo.DRAGON && objetivo.getTipo() == Tipo.DRAGON) {
             eficacia *= 2;    // Eficaz contra Dragón
             eficacia *= 0.5;  // Débil contra Dragón (resultado final: 1.0)
         }
 
-        // Obtener los valores necesarios para la fórmula
-        int nivel = getNivel();
-        double potencia = mov.getPotencia();
-        double hpBase = getHpBase();
-
-        // Calcular el daño base usando la fórmula
-        double daño = ((2.0 * nivel) / 5.0 + 2) * potencia * (hpBase / 100.0);
+        // Fórmula de daño
+        double daño = ((2.0 * getNivel()) / 5.0 + 2) * mov.getPotencia() * (getHpBase() / 100.0);
         daño = ((daño / 50.0) + 2) * STAB * eficacia;
 
         // Si el objetivo es un dragon con multiescamas
         if (objetivo instanceof Dragon) {
             Dragon dragonObjetivo = (Dragon) objetivo;
-            if (dragonObjetivo.multiescamas && objetivo.getHpActual() == objetivo.getHpTotal()) {
+            if (dragonObjetivo.getMultiescamas() && objetivo.getHpActual() == objetivo.getHpTotal()) {
                 daño *= 0.1; // Reducir el daño al 10% si la habilidad está activa
-                dragonObjetivo.multiescamas = false; // La habilidad se desactiva después de usarse
+                dragonObjetivo.setMultiescamas(false); // desactivamos la habilidad
             }
         }
 
-        // Retornar el daño como un entero
+        // Verificar precisión del movimiento al final
+        if (Math.random() * 100 >= mov.getPrecision()) {
+            Utilidades.slowPrint("¡El ataque falló!\n", "rojo");
+            return 0; // El ataque falla
+        }
+
         return (int) daño;
     }
 

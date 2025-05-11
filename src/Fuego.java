@@ -64,6 +64,12 @@ public class Fuego extends Javaling {
             }
         }
 
+        // chance que el ataque falle
+        if (Math.random() * 100 >= mov.getPrecision()) {
+            Utilidades.slowPrint("¡El ataque falló!\n", "rojo");
+            return 0; // El ataque falla
+        }
+
         return (int) daño;
     }
 

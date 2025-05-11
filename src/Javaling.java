@@ -46,11 +46,7 @@ public abstract class Javaling {
     }
     // imprime los datos del javaling
     public static void printJavalingData(Javaling javaling) {
-        /*
-         * nombre, tipo, hpTotal, velocidad y los nombres de los 4 movimientos del Javaling
-         * activo.
-         */
-        // cambiamos de color dependiendo del tipo de Javaling
+        // Cambiar el color dependiendo del tipo del Javaling
         switch (javaling.getTipo()) {
             case Tipo.FUEGO:
                 Utilidades.setPrintColor("naranjo");
@@ -65,19 +61,35 @@ public abstract class Javaling {
                 Utilidades.setPrintColor("magenta");
                 break;
         }
-        Utilidades.slowPrint("'" + javaling.getNombre() + "' Tipo: [" + javaling.getTipo() + "]\n" +
-        "   hpTotal:" + javaling.getHpTotal() + "\n" +
-        "   Velocidad: " + javaling.getVelocidad() + "\n");
-        // Utilidades.setPrintColor(""); // volvemos el color al normal
-        // nombrar los movimientos
-        Utilidades.slowPrint("Movimientos: \n");
-        Utilidades.slowPrint("  - " + javaling.movimientos[0].getNombre() + "\n");
-        Utilidades.slowPrint("  - " + javaling.movimientos[1].getNombre() + "\n");
-        Utilidades.slowPrint("  - " + javaling.movimientos[2].getNombre() + "\n");
-        if (javaling.movimientos[3] != null) {  // si es que exsite el cuarto movimiento
-            Utilidades.slowPrint("  - " + javaling.movimientos[3].getNombre() + "\n");
+
+        // Encabezado
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.printf("║ %-42s ║\n", "DATOS DEL JAVALING");
+        System.out.println("╚════════════════════════════════════════════╝");
+
+        // Información del Javaling
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.printf("║ Nombre: %-33s ║\n", "'" + javaling.getNombre() + "'");
+        System.out.printf("║ Tipo: %-35s ║\n", "[" + javaling.getTipo() + "]");
+        System.out.printf("║ HP Total: %-31d ║\n", javaling.getHpTotal());
+        System.out.printf("║ Velocidad: %-30d ║\n", javaling.getVelocidad());
+        System.out.println("╚════════════════════════════════════════════╝");
+
+        // Movimientos
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.printf("║ %-42s ║\n", "MOVIMIENTOS");
+        System.out.println("╚════════════════════════════════════════════╝");
+
+        for (int i = 0; i < javaling.getMovimientos().length; i++) {
+            Movimiento mov = javaling.getMovimientos()[i];
+            if (mov != null) {
+                System.out.printf(" %d) %-10s [%s] Potencia: %-3d Precisión: %-3d%%\n",
+                    i + 1, mov.getNombre(), mov.getTipo(), mov.getPotencia(), mov.getPrecision());
+            }
         }
-        Utilidades.setPrintColor(""); // volvemos el color al normal
+
+        // Resetear el color al final
+        Utilidades.setPrintColor("");
     }
 
     // retorna un Tipo de Javaling random
@@ -98,20 +110,16 @@ public abstract class Javaling {
 
     // ajusta la vida actual. esta funcion TIENE que ejecutarce antes que updateHpTotal
     public void updateHp() {
-        // guardamos el porcentaje de vida actual
-        double porcentajeVida;
-        if (hpActual == 0) {
-            porcentajeVida = 1.0;
-        } else {
-            porcentajeVida = hpActual / hpTotal;
+        // Guardamos el porcentaje de vida actual
+        double porcentajeVida = (hpActual > 0) ? (double) hpActual / hpTotal : 0.0;
+
+        // Actualizamos hpTotal
+        hpTotal = ((2 * hpBase * nivel) / 100) + nivel + 10;
+
+        // Calculamos la nueva hpActual solo si el Javaling tiene vida
+        if (hpActual > 0) {
+            hpActual = (int) Math.round(hpTotal * porcentajeVida);
         }
-
-        // actualizamos hpTotal
-        hpTotal = ((2* hpBase * nivel) / 100) + nivel + 10;
-
-        // calculamos la nueva hpTotal
-        hpActual = (int) Math.round(hpTotal * porcentajeVida);
-
     }
 
     // imprime los movimentos del Javaling

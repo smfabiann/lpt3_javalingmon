@@ -123,4 +123,54 @@ public class Utilidades {
         System.out.print("\u001B[0m"); // Código ANSI para resetear colores
     }
 
+    // Mensaje al usar un movimiento
+    public static void mensajeMovimiento(String nombreJugador, String nombreMovimiento) {
+        Utilidades.slowPrint("╔════════════════════════════════════════════╗\n", "naranja");
+        Utilidades.slowPrint("║ " + nombreJugador + " usó '" + nombreMovimiento + "'!!! \n", "naranja");
+        Utilidades.slowPrint("╚════════════════════════════════════════════╝\n", "naranja");
+    }
+
+    // Mensaje de daño infligido
+    public static void mensajeDaño(int daño) {
+        Utilidades.slowPrint("╔════════════════════════════════════════════╗\n", "naranja");
+        Utilidades.slowPrint("║ Hit!! " + daño + " \n", "naranja");
+        Utilidades.slowPrint("╚════════════════════════════════════════════╝\n", "naranja");
+    }
+
+    // Mensaje de enemigo caído
+    public static void mensajeEnemigoCaido() {
+        Utilidades.slowPrint("╔════════════════════════════════════════════╗\n", "rojo");
+        Utilidades.slowPrint("║ ¡El Javaling enemigo ha caído! \n", "rojo");
+        Utilidades.slowPrint("╚════════════════════════════════════════════╝\n", "rojo");
+    }
+
+    // Mensaje de entrenador sacando otro Javaling
+    public static void mensajeEntrenadorSacaOtroJavaling() {
+        Utilidades.slowPrint("╔════════════════════════════════════════════╗\n", "rojo");
+        Utilidades.slowPrint("║ ¡El entrenador sacó otro Javaling! \n", "rojo");
+        Utilidades.slowPrint("╚════════════════════════════════════════════╝\n", "rojo");
+    }
+
+    // Mensaje de estado del Javaling enemigo
+    public static void mensajeEstadoJavalingEnemigo(Javaling javalingEntrenador) {
+        Utilidades.slowPrint("╔════════════════════════════════════════════╗\n", "naranja");
+        Utilidades.slowPrint("║ Estado del Javaling enemigo:              \n", "naranja");
+        Utilidades.slowPrint("║ Lv. " + javalingEntrenador.getNivel() + " HP: " +
+            javalingEntrenador.getHpActual() + "/" + javalingEntrenador.getHpTotal() + "\n", "naranja");
+        Utilidades.slowPrint("╚════════════════════════════════════════════╝\n", "naranja");
+    }
+
+    // Mensaje de escape exitoso
+    public static void mensajeEscapeExitoso() {
+        Utilidades.slowPrint("╔════════════════════════════════════════════╗\n", "rojo");
+        Utilidades.slowPrint("║ ¡Escapaste con éxito!\n", "rojo");
+        Utilidades.slowPrint("╚════════════════════════════════════════════╝\n", "rojo");
+    }
+
+    // Mensaje de game over
+    public static void mensajeGameOver() {
+        Utilidades.slowPrint("╔════════════════════════════════════════════╗\n", "rojo");
+        Utilidades.slowPrint("║ ¡GAME OVER! Todo tu equipo ha sido derrotado.\n", "rojo");
+        Utilidades.slowPrint("╚════════════════════════════════════════════╝\n", "rojo");
+    }
 }

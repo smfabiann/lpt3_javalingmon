@@ -31,7 +31,7 @@ public class Jugador implements Batalla {
         while (valido) {
             Utilidades.slowPrint("Seleccion tu Javaling para pelear!!\n");
             verJavalingsEquipo();
-            Utilidades.slowPrint("0) GTFU!!!\n", "rojo");
+            Utilidades.slowPrint("  0) ESCAPAR!!!\n", "rojo");
 
             int eleccion = scanner.nextInt();
             

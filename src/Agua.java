@@ -49,10 +49,16 @@ public class Agua extends Javaling {
             }
         }
 
-        // oelaje
+        // Aplicar habilidad "Oleaje"
         if (oleaje) {
             daño *= 1.15; // Incrementar daño en un 15%
             oleaje = false; // La habilidad se desactiva después de usarse
+        }
+
+        // Verificar precisión del movimiento al final
+        if (Math.random() * 100 >= mov.getPrecision()) {
+            Utilidades.slowPrint("¡El ataque falló!\n", "rojo");
+            return 0; // El ataque falla
         }
 
         return (int) daño;

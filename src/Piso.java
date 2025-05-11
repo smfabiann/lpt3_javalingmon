@@ -127,14 +127,7 @@ public class Piso {
             Utilidades.slowPrint("2. Cambiar Javaling\n");
             Utilidades.slowPrint("3. Escapar!!\n");
 
-            /*
-             * TODO: ASCII colocar javaling elegido por el jugador
-             */
-
-            /*
-             * TODO: ASCII colocar javaling enemigo
-             */
-
+            
             Batalla entrenadorB = entr;
             // asignamos el javaling del enrenador. siempre es el mas cerca de [0] que no sea null
             Javaling javalingEntrenador = entrenadorB.elgirJavalingActivo();
@@ -154,59 +147,45 @@ public class Piso {
 
             // loop principal de la batalla
             if (opcion == 1) {
-                // le damos las opciones de movimiento al jugador
+                // Mostrar movimientos del jugador
                 javalingJugador.printMovimientos();
 
-                // ejecutamos el movimiento
+                // Ejecutar el movimiento
                 opcion = scanner.nextInt();
-                // se calcula el daño
-                int daño = javalingJugador.atacar(javalingEntrenador, opcion-1);
+                int daño = javalingJugador.atacar(javalingEntrenador, opcion - 1);
 
-                // notificamos al jugador sobre el daño y el movimiento
-                Utilidades.slowPrint(javalingJugador.getNombre() + " uso '" +
-                    javalingJugador.getMovimientos()[opcion-1].getNombre() + "'!!!\n", "naranja");
-                Utilidades.slowPrint("Hit!! " + daño + "\n", "naranja");    // daño hecho notificado
+                // Notificar al jugador sobre el movimiento y el daño
+                Utilidades.mensajeMovimiento(javalingJugador.getNombre(), javalingJugador.getMovimientos()[opcion - 1].getNombre());
+                Utilidades.mensajeDaño(daño);
 
-                // le quitamos vida al javaling enemigo
+                // Reducir la vida del Javaling enemigo
                 javalingEntrenador.setHpActual(javalingEntrenador.getHpActual() - daño);
-                
-                /*
-                 * El javaling enemigo muere
-                 */
+
+                // Si el Javaling enemigo muere
                 if (javalingEntrenador.getHpActual() <= 0) {
-                    Utilidades.slowPrint("Javaling enemigo callo!!\n");
+                    Utilidades.mensajeEnemigoCaido();
 
-                    // hacemos que su javaling actual se vuelva null
-                    // javalingEntrenador = null;
+                    // Cambiar el Javaling del entrenador
                     entr.nullifyJavaling(javalingEntrenador);
-
-                    // hacemos que el entrenador cambie su javaling
                     javalingEntrenador = entrenadorB.elgirJavalingActivo();
 
-                    
-                    // si el entrenador elige un Javaling nulo, significa que no le quedan más
+                    // Si no quedan más Javalings
                     if (javalingEntrenador == null) {
                         Utilidades.slowPrint("Entrenador derrotado!!!\n", "verde");
-                        Utilidades.slowPrint("+2 Lv\n", "amarrilo");
-                        // se suben de nivel
+                        Utilidades.slowPrint("+2 Lv\n", "amarillo");
                         jugador.subirNivelesTodos();
                         jugador.subirNivelesTodos();
                         return;
                     }
 
-                    // el enemigo saca otro javaling
-                    Utilidades.slowPrint("El entrenador saco otro Javaling!!\n", "rojo");
+                    // El entrenador saca otro Javaling
+                    Utilidades.mensajeEntrenadorSacaOtroJavaling();
                 }
-                
-                // damos el status del javaling enemigo
-                System.out.println();
-                Utilidades.slowPrint("Javaling enemigo: \n");
-                Utilidades.slowPrint("Lv. "+ javalingEntrenador.getNivel() + " Hp: " +
-                    javalingEntrenador.getHpActual() + "/" + javalingEntrenador.getHpTotal() + "\n");
-                System.out.println();
 
+                // Mostrar el estado del Javaling enemigo
+                Utilidades.mensajeEstadoJavalingEnemigo(javalingEntrenador);
             } else if (opcion == 2) {
-                // TODO
+                javalingJugador = jugadorB.elgirJavalingActivo();
             } else if (opcion == 3) {
                 Utilidades.slowPrint("CORRE CTM!\n", "rojo");
                 Utilidades.sleep(700);
@@ -218,59 +197,39 @@ public class Piso {
             /*
              * Turno del entrenador
              */
-            while (true) {  // probablemente innecesario, pero esto es un bucle para buscar un ataque no null
+            while (true) {
                 int indice = random.nextInt(4);
                 if (javalingEntrenador.getMovimientos()[indice] != null) {
-                    // se caucula el daño del entrenador
                     int daño = javalingEntrenador.atacar(javalingJugador, indice);
                     Utilidades.slowPrint("El enemigo ataca!!!\n", "rojo");
-                    Utilidades.slowPrint("Hit!! " + daño + "\n", "rojo");
+                    Utilidades.mensajeDaño(daño);
 
-                    // actualizamos el javaling del jugador
+                    // Reducir la vida del Javaling del jugador
                     javalingJugador.setHpActual(javalingJugador.getHpActual() - daño);
 
-                    // activamos la habilidad de oleaje
+                    // Activar habilidad de oleaje si es tipo agua
                     if (javalingEntrenador.getTipo() == Tipo.AGUA) {
                         Agua agua = (Agua) javalingEntrenador;
                         agua.activarOleaje();
                     }
-                    // no es necesario hacer lo mismo para el javaling Fuego
 
-                    // en caso de que el javaling muera
+                    // Si el Javaling del jugador muere
                     if (javalingJugador.getHpActual() <= 0) {
-                        // le avisamos al jugador que su javalign ha caido
-                        System.out.println();
-                        Utilidades.slowPrint("Tu Javaling ha caido!!!!\n","rojo");
-
-                        // le asignamos 0 de vida en caso que tenga vida negativa
+                        Utilidades.slowPrint("Tu Javaling ha caído!!!!\n", "rojo");
                         javalingJugador.setHpActual(0);
                         javalingJugador = jugadorB.elgirJavalingActivo();
 
-                        // si es que el jugador se equedo sin javalines validos, es game over
+                        // Si no quedan más Javalings
                         if (javalingJugador == null) {
-                            // espacio
-                            for (int i = 0; i < 10; i++) System.out.println();
-                            Utilidades.slowPrint("Todo tu equipo ha sido derrotado", "rojo");
-                            // puntitos para efecto dramatico
-                            for (int i = 0; i < 4; i++) {
-                                Utilidades.sleep(400);
-                                Utilidades.slowPrint(".", "rojo");
-                            }
-                            Utilidades.sleep(700);
-                            for (int i = 0; i < 50; i++) System.out.println();
-                            // game over
-                            Utilidades.slowPrint("GAME OVER\n", "rojo");
+                            Utilidades.mensajeGameOver();
                             System.exit(0);
                         }
-
                     }
 
-                    // mostramos resultados del javaling jugador
-                    System.out.println();
+                    // Mostrar el estado del Javaling del jugador
                     Utilidades.slowPrint("Lv. " + javalingJugador.getNivel() + " '" +
-                    javalingJugador.getNombre() + "' HP: " + javalingJugador.getHpActual() +
-                    "/" + javalingJugador.getHpTotal(), "naranja");
-                    System.out.println();
+                        javalingJugador.getNombre() + "' HP: " + javalingJugador.getHpActual() +
+                        "/" + javalingJugador.getHpTotal() + "\n", "naranja");
                     break;
                 }
             }

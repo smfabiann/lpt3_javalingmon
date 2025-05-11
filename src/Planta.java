@@ -48,6 +48,12 @@ public class Planta extends Javaling {
             }
         }
 
+        // Verificar precisión del movimiento al final
+        if (Math.random() * 100 >= mov.getPrecision()) {
+            Utilidades.slowPrint("¡El ataque falló!\n", "rojo");
+            return 0; // El ataque falla
+        }
+
         return (int) daño;
     }
 

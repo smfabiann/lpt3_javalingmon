@@ -6,8 +6,6 @@ public class Main {
     static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        System.out.println("Hello, world!!!");
-        
         // inicializamos al jugador
         Jugador jugador = new Jugador();
         /*
@@ -67,11 +65,6 @@ public class Main {
             Utilidades.slowPrint("Tu y " + jugador.getEquipo()[0].getNombre() +
             " enfrentaran muchos desafios escalando la Torre de los Javalings!!!\n");
             Utilidades.slowPrint("Les deseo mucha suerte en su aventura, 'Jugador'.\n", "rojo");
-            /* -------------- DEBUGGGG -------------- */
-            // {
-            //     System.out.println(jugador.getEquipo()[0].getTipo());
-            // }
-            /* -------------- DEBUGGGG -------------- */
         }
         
         /*
@@ -105,7 +98,7 @@ public class Main {
                 Utilidades.slowPrint("3. Elegir un objeto aleatorio.\n");
                 Utilidades.slowPrint("4. Ver bolsa.\n");
                 Utilidades.slowPrint("5. Ver mis Javalings.\n");
-                if (jugador.getPisoActual().getNumPiso() % 10 == 0) {
+                if (jugador.getPisoActual().getNumPiso() % 10 == 0 && jugador.getPisoActual().getNumPiso()!= 0) {
                     jugador.getPisoActual().setCentroSansanito(true);
                     Utilidades.slowPrint("6. Sansanito (sala de curacion).\n");
                 } else {
