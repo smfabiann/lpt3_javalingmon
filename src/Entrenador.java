@@ -91,5 +91,6 @@ public class Entrenador implements Batalla{
     
     // gettter
     public Javaling[] getEquipo() { return equipo;}
+    public boolean getEsCampeon() { return esCampeon; }
 
 }

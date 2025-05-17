@@ -19,7 +19,6 @@ CLASSES = \
 	Batalla.java \
 	Tipo.java \
 	TipoObjeto.java \
-	TipoMovimiento.java
 
 # Regla por defecto: compilar todo
 default: classes

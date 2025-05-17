@@ -10,8 +10,7 @@ public class Utilidades {
             System.out.print(c);
 
             // colocamos un delay random entre cada letra, para que se sienta mas natural
-            // int delay = random.nextInt(10);
-            int delay = random.nextInt(1);
+            int delay = random.nextInt(7);
             // se añade el delay, try porque sino no me deja usar el sleep
             try {
                 Thread.sleep(delay);
@@ -57,7 +56,7 @@ public class Utilidades {
             System.out.print(c);
 
             // colocamos un delay random entre cada letra, para que se sienta mas natural
-            int delay = random.nextInt(1);
+            int delay = random.nextInt(7);
             // int delay = random.nextInt(20);
             // se añade el delay, try porque sino no me deja usar el sleep
             try {

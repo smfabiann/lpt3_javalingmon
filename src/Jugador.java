@@ -160,7 +160,9 @@ public class Jugador implements Batalla {
     public Javaling[] getEquipo() {return equipo;}
     public Piso getPisoActual() {return pisoActual;}
     public List<Objeto> getBolsa() {return bolsa;}
+    public String getNombre() {return nombre;}
     // setters
     public void setEquipoSlot(Javaling javaling, int slot) {equipo[slot] = javaling;}
     public void setPisoActual(Piso piso) {pisoActual = piso;}
+    public void setNombre(String nombre) {this.nombre = nombre;}
 }
